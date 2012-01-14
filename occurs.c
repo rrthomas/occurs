@@ -120,8 +120,6 @@ main(int argc, char *argv[])
       }
       read_symbols(hash);
       fclose(stdin);
-      if (i < (unsigned)args_info.inputs_num - 1)
-        putchar('\n');
     }
 
   // Print out symbol data
