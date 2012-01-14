@@ -42,9 +42,8 @@ except re.error as err:
 freq = Counter()
 args.file = args.file or ['-']
 for i, f in enumerate(args.file):
-    with fileinput.input(files=(f,)) as h:
-        for line in h:
-            freq.update(pattern.findall(line))
+    for line in fileinput.input(files=(f,)):
+        freq.update(pattern.findall(line))
 
 # Write output
 for s in freq:
