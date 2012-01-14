@@ -68,7 +68,6 @@ func main() {
 			var err os.Error
 			h, err = os.Open(f)
 			if err != nil { panic(err) }
-			defer h.Close()
 		} else { h = os.Stdin }
 
 		// Read file into symbol table
@@ -90,6 +89,7 @@ func main() {
 				panic(err)
 			}
 		}
+		h.Close()
 	}
 
 	// Print out symbol data
