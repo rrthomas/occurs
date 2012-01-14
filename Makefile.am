@@ -1,6 +1,6 @@
 # Top-level Makefile.am
 #
-# Copyright (c) 2009, 2011 Reuben Thomas
+# Copyright (c) 2009, 2011-2012 Reuben Thomas
 
 SUBDIRS = lib
 
