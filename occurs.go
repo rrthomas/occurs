@@ -30,7 +30,7 @@ func usage() {
 		"\n" +
 		"  non-white-space characters: -s \"([ \\t\\n\\f\\v]+)\"\n" +
 		"  alphanumerics and underscores: -s \"([A-Za-z0-9_]+)\"\n" +
-		"  XML tags: -s \"<([a-zA-Z_:][a-zA-Z_:.0-9-]*[\\s>]\"\n")
+		"  XML tags: -s \"<([a-zA-Z_:][a-zA-Z_:.0-9-]*)[\\s>]\"\n")
 }
 
 func showVersion() {
