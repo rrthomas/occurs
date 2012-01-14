@@ -58,12 +58,10 @@ get_symbol(char *s, char **end)
 }
 
 // Read the file into a hash
-static size_t
+static void
 read_symbols(Hash_table *hash)
 {
-  size_t symbols = 0;
   size_t len;
-
   for (char *line = NULL; getline(&line, &len, stdin) != -1; line = NULL) {
     char *symbol = NULL, *p = line;
     for (char *end; (symbol = get_symbol(p, &end)); p = end) {
@@ -75,7 +73,6 @@ read_symbols(Hash_table *hash)
       if (fw) {
         fw->count++;
       } else {
-        symbols++;
         fw = XMALLOC(struct freq_symbol);
         size_t symlen = end - symbol;
         *fw = (struct freq_symbol) {.symbol = xmalloc(symlen + 1), .count = 1};
@@ -87,8 +84,6 @@ read_symbols(Hash_table *hash)
     }
     free(line);
   }
-
-  return symbols;
 }
 
 int
