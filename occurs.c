@@ -42,13 +42,11 @@ symboleq(const void *v, const void *w)
   return strcmp(((const struct freq_symbol *) v)->symbol, ((const struct freq_symbol *) w)->symbol) == 0;
 }
 
-static regex_t symbol_re; // regex object for the symbol pattern
-
 static char *
-get_symbol(char *s, char **end)
+get_symbol(regex_t *re, char *s, char **end)
 {
   regmatch_t match[1];
-  if (regexec(&symbol_re, s, 1, match, 0) != 0)
+  if (regexec(&re, s, 1, match, 0) != 0)
     return NULL;
   *end = s + match[0].rm_eo;
   return s + match[0].rm_so;
@@ -68,11 +66,12 @@ main(int argc, char *argv[])
     cmdline_parser_print_version();
 
   // Compile regex
-  int err = regcomp(&symbol_re, args_info.symbol_arg, REG_EXTENDED);
+  regex_t re;
+  int err = regcomp(&re, args_info.symbol_arg, REG_EXTENDED);
   if (err != 0) {
-    size_t errlen = regerror(err, &symbol_re, NULL, 0);
+    size_t errlen = regerror(err, &re, NULL, 0);
     char *errbuf = xmalloc(errlen);
-    regerror(err, &symbol_re, errbuf, errlen);
+    regerror(err, &re, errbuf, errlen);
     error(EXIT_FAILURE, errno, "%s", errbuf);
   }
 
@@ -86,7 +85,7 @@ main(int argc, char *argv[])
     size_t len;
     for (char *line = NULL; getline(&line, &len, stdin) != -1; line = NULL) {
       char *symbol = NULL, *p = line;
-      for (char *end; (symbol = get_symbol(p, &end)); p = end) {
+      for (char *end; (symbol = get_symbol(&re, p, &end)); p = end) {
         struct freq_symbol fw2 = {symbol, 0};
         // Temporarily insert a NUL to make the symbol a string
         char c = *end;
