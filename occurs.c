@@ -57,35 +57,6 @@ get_symbol(char *s, char **end)
   return s + match[0].rm_so;
 }
 
-// Read the file into a hash
-static void
-read_symbols(Hash_table *hash)
-{
-  size_t len;
-  for (char *line = NULL; getline(&line, &len, stdin) != -1; line = NULL) {
-    char *symbol = NULL, *p = line;
-    for (char *end; (symbol = get_symbol(p, &end)); p = end) {
-      struct freq_symbol fw2 = {symbol, 0};
-      // Temporarily insert a NUL to make the symbol a string
-      char c = *end;
-      *end = '\0';
-      freq_symbol_t fw = hash_lookup(hash, &fw2);
-      if (fw) {
-        fw->count++;
-      } else {
-        fw = XMALLOC(struct freq_symbol);
-        size_t symlen = end - symbol;
-        *fw = (struct freq_symbol) {.symbol = xmalloc(symlen + 1), .count = 1};
-        strncpy(fw->symbol, symbol, symlen);
-        fw->symbol[symlen] = '\0';
-        assert(hash_insert(hash, fw));
-      }
-      *end = c; // Restore the overwritten character
-    }
-    free(line);
-  }
-}
-
 int
 main(int argc, char *argv[])
 {
@@ -110,17 +81,36 @@ main(int argc, char *argv[])
 
   // Process input
   Hash_table *hash = hash_initialize(256, NULL, symbolhash, symboleq, NULL);
-  if (args_info.inputs_num == 0)
-    read_symbols(hash);
-  else
-    for (unsigned i = 0; i < args_info.inputs_num; i++) {
-      if (strcmp(args_info.inputs[i], "-") != 0) {
-        if (!freopen(args_info.inputs[i], "r", stdin))
-          error(EXIT_FAILURE, errno, "cannot open %s", quote(args_info.inputs[i]));
-      }
-      read_symbols(hash);
-      fclose(stdin);
+  for (unsigned i = 0; i <= args_info.inputs_num; i++) {
+    if (i < args_info.inputs_num && strcmp(args_info.inputs[i], "-") != 0) {
+      if (!freopen(args_info.inputs[i], "r", stdin))
+        error(EXIT_FAILURE, errno, "cannot open %s", quote(args_info.inputs[i]));
     }
+    size_t len;
+    for (char *line = NULL; getline(&line, &len, stdin) != -1; line = NULL) {
+      char *symbol = NULL, *p = line;
+      for (char *end; (symbol = get_symbol(p, &end)); p = end) {
+        struct freq_symbol fw2 = {symbol, 0};
+        // Temporarily insert a NUL to make the symbol a string
+        char c = *end;
+        *end = '\0';
+        freq_symbol_t fw = hash_lookup(hash, &fw2);
+        if (fw) {
+          fw->count++;
+        } else {
+          fw = XMALLOC(struct freq_symbol);
+          size_t symlen = end - symbol;
+          *fw = (struct freq_symbol) {.symbol = xmalloc(symlen + 1), .count = 1};
+          strncpy(fw->symbol, symbol, symlen);
+          fw->symbol[symlen] = '\0';
+          assert(hash_insert(hash, fw));
+        }
+        *end = c; // Restore the overwritten character
+      }
+      free(line);
+    }
+    fclose(stdin);
+  }
 
   // Print out symbol data
   size_t symbols = 0;
