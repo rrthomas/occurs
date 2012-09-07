@@ -43,7 +43,7 @@ io.processFiles (function (file, number)
 -- Write output
 local symbols = 0
 for s in pairs (freq) do
-  io.writeline (s .. (getopt.opt.nocount and "" or " " .. freq[s]))
+  io.writelines (s .. (getopt.opt.nocount and "" or " " .. freq[s]))
   symbols = symbols + 1
 end
 if not getopt.opt.nocount then
