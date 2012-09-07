@@ -47,4 +47,4 @@ for line in fileinput.input(files=args.file or ['-']):
 for s in freq:
     print(s + ('' if args.nocount else ' {}'.format(freq[s])))
 if not args.nocount:
-    print("Total symbols: {}".format(len(freq)), file=sys.stderr)
+    print("Total symbols:", len(freq), file=sys.stderr)
