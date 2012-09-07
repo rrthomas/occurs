@@ -24,7 +24,7 @@ parser.add_argument('-n', '--nocount', action='store_true',
 parser.add_argument('-s', '--symbol', metavar='REGEXP', default='[^\W\d_]+',
                     help='symbols are given by REGEXP')
 parser.add_argument('-V', '--version', action='version',
-                    version='%(prog)s 0.9 (27 Sep 2011) by Reuben Thomas <rrt@sc3d.org>')
+                    version='%(prog)s 0.91 (7 Sep 2012) by Reuben Thomas <rrt@sc3d.org>')
 parser.add_argument('file', metavar='FILE', nargs='*')
 
 args = parser.parse_args()
@@ -40,16 +40,11 @@ except re.error as err:
 
 # Process input
 freq = Counter()
-args.file = args.file or ['-']
-for i, f in enumerate(args.file):
-    for line in fileinput.input(files=(f,)):
-        freq.update(pattern.findall(line))
+for line in fileinput.input(files=args.file or ['-']):
+    freq.update(pattern.findall(line))
 
 # Write output
 for s in freq:
-    print(s, end='')
-    if not args.nocount:
-        print(' {}'.format(freq[s]), end='')
-    print('')
+    print(s + ('' if args.nocount else ' {}'.format(freq[s])))
 if not args.nocount:
     print("Total symbols: {}".format(len(freq)), file=sys.stderr)
