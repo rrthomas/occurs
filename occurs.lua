@@ -1,7 +1,7 @@
 #!/usr/bin/env lua
 prog = {
   name = "occurs",
-  banner = "occurs 0.85 (27 Sep 2011) by Reuben Thomas <rrt@sc3d.org>",
+  banner = "occurs 0.86 (25 Sep 2012) by Reuben Thomas <rrt@sc3d.org>",
   purpose = "Count the occurrences of each symbol in a file.",
   notes = "The default symbol type is words (-s \"([[:alpha:]]+)\"); other useful settings\n" ..
     "include:\n\n" ..
@@ -22,7 +22,7 @@ options = {
 -- Parse command-line args
 os.setlocale ("")
 getopt.processArgs ()
-local symbolPat = getopt.opt.symbol or "([[:alpha:]]+)"
+local symbolPat = getopt.opt.symbol and table.remove (getopt.opt.symbol) or "([[:alpha:]]+)"
 
 -- Compile symbol-matching regexp
 local ok, pattern = pcall (rex_posix.new, symbolPat)
