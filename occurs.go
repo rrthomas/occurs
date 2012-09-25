@@ -4,14 +4,15 @@ package main
 
 import (
 	"bufio"
-	"os"
-	"fmt"
 	"flag"
+	"fmt"
+	"io"
+	"os"
 	"regexp"
 )
 
 var progname = "occurs"
-var version = "0.9 (27 Sep 2011)"
+var version = "0.91 (25 Sep 2012)"
 var author = "Reuben Thomas <rrt@sc3d.org>"
 
 // Command-line arguments
@@ -38,37 +39,51 @@ func showVersion() {
 }
 
 func main() {
-	defer func () {
+	defer func() {
 		if r := recover(); r != nil {
 			fmt.Fprintf(os.Stderr, "%s: %s\n", progname, r)
 			os.Exit(1)
 		}
 	}()
 
-	// FIXME: setlocale(locale.LC_ALL, '')
+	// FIXME: setlocale(locale.LC_ALL, '') // locale package is currently (Go 1) in exp/locale/
 
 	// Parse command-line args
 	flag.Parse()
-	if *versionFlag { showVersion(); os.Exit(0) }
-	if *helpFlag { usage(); os.Exit(0) }
+	if *versionFlag {
+		showVersion()
+		os.Exit(0)
+	}
+	if *helpFlag {
+		usage()
+		os.Exit(0)
+	}
 
 	// Compile symbol-matching regexp
 	pattern, err := regexp.Compile(*symbol)
-	if err != nil { panic(err) }
+	if err != nil {
+		panic(err)
+	}
 
 	// Process input
 	symbols := 0
 	freq := make(map[string]int)
 	args := flag.Args()
-	if flag.NArg() == 0 { args = append(args, "-") }
+	if flag.NArg() == 0 {
+		args = append(args, "-")
+	}
 	for i := range args {
-		var h *os.File;
+		var h *os.File
 		f := args[i]
 		if f != "-" {
-			var err os.Error
+			var err error
 			h, err = os.Open(f)
-			if err != nil { panic(err) }
-		} else { h = os.Stdin }
+			if err != nil {
+				panic(err)
+			}
+		} else {
+			h = os.Stdin
+		}
 
 		// Read file into symbol table
 		bh := bufio.NewReader(h)
@@ -80,10 +95,12 @@ func main() {
 				syms := pattern.FindAllStringSubmatch(line, -1)
 				for _, matches := range syms {
 					s := string(matches[1])
-					if freq[s] == 0 { symbols++ }
+					if freq[s] == 0 {
+						symbols++
+					}
 					freq[s] += 1
 				}
-			case os.EOF:
+			case io.EOF:
 				break read
 			default:
 				panic(err)
@@ -95,8 +112,12 @@ func main() {
 	// Print out symbol data
 	for s, _ := range freq {
 		fmt.Print(s)
-		if !*nocount { fmt.Printf(" %d", freq[s]) }
+		if !*nocount {
+			fmt.Printf(" %d", freq[s])
+		}
 		fmt.Print("\n")
 	}
-	if !*nocount { fmt.Fprintf(os.Stderr, "Total symbols: %d\n", symbols) }
+	if !*nocount {
+		fmt.Fprintf(os.Stderr, "Total symbols: %d\n", symbols)
+	}
 }
