@@ -11,7 +11,7 @@ prog = {
 }
 
 require "std"
-require "rex_posix"
+rex_posix = require "rex_posix"
 
 -- Command-line options
 options = {
