@@ -1,7 +1,7 @@
 #!/usr/bin/env lua
 prog = {
   name = "occurs",
-  banner = "occurs 0.86 (25 Sep 2012) by Reuben Thomas <rrt@sc3d.org>",
+  banner = "occurs 0.87 (09 Mar 2013) by Reuben Thomas <rrt@sc3d.org>",
   purpose = "Count the occurrences of each symbol in a file.",
   notes = "The default symbol type is words (-s \"([[:alpha:]]+)\"); other useful settings\n" ..
     "include:\n\n" ..
@@ -15,13 +15,13 @@ rex_posix = require "rex_posix"
 
 -- Command-line options
 options = {
-  Option {{"nocount", "n"}, "don't show the frequencies or total"},
-  Option {{"symbol", "s"}, "symbols are given by REGEXP", "Req", "REGEXP"},
+  {{"nocount", "n"}, "don't show the frequencies or total"},
+  {{"symbol", "s"}, "symbols are given by REGEXP", "Req", "REGEXP"},
 }
 
 -- Parse command-line args
 os.setlocale ("")
-getopt.processArgs ()
+getopt.processArgs (prog)
 local symbolPat = getopt.opt.symbol and table.remove (getopt.opt.symbol) or "([[:alpha:]]+)"
 
 -- Compile symbol-matching regexp
