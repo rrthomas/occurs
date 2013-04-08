@@ -1,7 +1,7 @@
 #!/usr/bin/env lua
 prog = {
   name = "occurs",
-  banner = "occurs 0.87 (09 Mar 2013) by Reuben Thomas <rrt@sc3d.org>",
+  version = "occurs 0.87 (09 Mar 2013) by Reuben Thomas <rrt@sc3d.org>",
   purpose = "Count the occurrences of each symbol in a file.",
   notes = "The default symbol type is words (-s \"([[:alpha:]]+)\"); other useful settings\n" ..
     "include:\n\n" ..
