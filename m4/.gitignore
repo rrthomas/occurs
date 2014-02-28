@@ -9,7 +9,6 @@
 /extensions.m4
 /gl_list.m4
 /include_next.m4
-/inline.m4
 /longlong.m4
 /multiarch.m4
 /stdbool.m4
@@ -49,8 +48,6 @@
 /msvc-inval.m4
 /msvc-nothrow.m4
 /nl_langinfo.m4
-/strcase.m4
-/strings_h.m4
 /sys_socket_h.m4
 /sys_types_h.m4
 /wchar_h.m4
@@ -77,3 +74,14 @@
 /math_h.m4
 /quote.m4
 /quotearg.m4
+/absolute-header.m4
+/eealloc.m4
+/extern-inline.m4
+/lib-ld.m4
+/lib-link.m4
+/lib-prefix.m4
+/locale_h.m4
+/localeconv.m4
+/lock.m4
+/off_t.m4
+/threadlib.m4

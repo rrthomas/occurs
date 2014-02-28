@@ -66,11 +66,8 @@
 /msvc-nothrow.c
 /msvc-nothrow.h
 /nl_langinfo.c
-/strcasecmp.c
 /strerror-override.c
 /strerror-override.h
-/strings.in.h
-/strncasecmp.c
 /sys_types.in.h
 /xalloc-oversized.h
 /gl_xlist.c
@@ -117,7 +114,13 @@
 /c-strcasecmp.c
 /c-strcaseeq.h
 /c-strncasecmp.c
-/quote.c
 /quote.h
 /quotearg.c
 /quotearg.h
+/bitrotate.c
+/locale.in.h
+/locale.h
+/localeconv.c
+/unistd.c
+/wctype-h.c
+/glthread
