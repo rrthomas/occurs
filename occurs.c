@@ -46,7 +46,7 @@ static char *
 get_symbol(regex_t *re, char *s, char **end)
 {
   regmatch_t match[1];
-  if (regexec(&re, s, 1, match, 0) != 0)
+  if (regexec(re, s, 1, match, 0) != 0)
     return NULL;
   *end = s + match[0].rm_eo;
   return s + match[0].rm_so;
