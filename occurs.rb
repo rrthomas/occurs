@@ -27,10 +27,9 @@ end
 
 # Read input
 words = {}
-while gets do
-  scan(pat).each do |k|
-    words[k] ||= 0
-    words[k] += 1
+while s = gets
+  s.scan(pat).each do |k|
+    words[k] = (words[k] || 0) + 1
   end
 end
 
