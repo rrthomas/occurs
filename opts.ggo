@@ -1,14 +1,14 @@
 # gengetopt for occurs
 purpose "Count the number of occurrences of each symbol in a file"
-usage " [OPTION]... [FILE]...\n\
+usage " [OPTION]... [FILE]...
   In the file list, `-' means read from standard input"
 
 option "nocount"    n "don't show the frequencies or total"     flag off
 option "symbol"     s "symbols are given by REGEXP"             string typestr="regexp" optional default="[[:alpha:]]+"
 
-text "\n\
-The default symbol type is words (-s \"[[:alpha:]]+\"); other useful settings include:\n\
-\n\
-  non-white-space characters: -s \"[^[:space:]]+\"\n\
-  alphanumerics and underscores: -s \"[[:alnum:]_]+\"\n\
+text "
+The default symbol type is words (-s \"[[:alpha:]]+\"); other useful settings include:
+
+  non-white-space characters: -s \"[^[:space:]]+\"
+  alphanumerics and underscores: -s \"[[:alnum:]_]+\"
   XML tags: -s \"<([a-zA-Z_:][a-zA-Z_:.0-9-]*)[[:space:]>]\""
