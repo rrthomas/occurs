@@ -22,8 +22,6 @@
 #include "cmdline.h"
 
 
-struct gengetopt_args_info args_info;
-
 // Type to hold symbol-frequency pairs
 typedef struct freq_symbol {
   char *symbol;
@@ -58,6 +56,7 @@ main(int argc, char *argv[])
   setlocale(LC_ALL, "");
 
   // Process command-line options
+  struct gengetopt_args_info args_info;
   if (cmdline_parser(argc, argv, &args_info) != 0)
     exit(EXIT_FAILURE);
 
