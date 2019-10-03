@@ -6,13 +6,12 @@ import (
 	"bufio"
 	"flag"
 	"fmt"
-	"io"
 	"os"
 	"regexp"
 )
 
 var progname = "occurs"
-var version = "0.91 (25 Sep 2012)"
+var version = "0.92 (03 Oct 2019)"
 var author = "Reuben Thomas <rrt@sc3d.org>"
 
 // Command-line arguments
@@ -86,24 +85,15 @@ func main() {
 		}
 
 		// Read file into symbol table
-		bh := bufio.NewReader(h)
-	read:
-		for {
-			line, err := bh.ReadString('\n') // FIXME: Cope with platform line ending
-			switch err {
-			case nil:
-				syms := pattern.FindAllStringSubmatch(line, -1)
-				for _, matches := range syms {
-					s := string(matches[1])
-					if freq[s] == 0 {
-						symbols++
-					}
-					freq[s] += 1
+		scanner := bufio.NewScanner(h)
+		for scanner.Scan() {
+			syms := pattern.FindAllStringSubmatch(scanner.Text(), -1)
+			for _, matches := range syms {
+				s := string(matches[1])
+				if freq[s] == 0 {
+					symbols++
 				}
-			case io.EOF:
-				break read
-			default:
-				panic(err)
+				freq[s] += 1
 			}
 		}
 		h.Close()
