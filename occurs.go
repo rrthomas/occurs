@@ -8,6 +8,8 @@ import (
 	"fmt"
 	"os"
 	"regexp"
+
+	"github.com/famz/SetLocale"
 )
 
 var progname = "occurs"
@@ -45,7 +47,7 @@ func main() {
 		}
 	}()
 
-	// FIXME: setlocale(locale.LC_ALL, '') // locale package is currently (Go 1) in exp/locale/
+	SetLocale.SetLocale(SetLocale.LC_ALL, "")
 
 	// Parse command-line args
 	flag.Parse()
