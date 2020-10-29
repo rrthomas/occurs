@@ -100,8 +100,8 @@ main(int argc, char *argv[])
       }
       free(line);
     }
-    fclose(stdin);
   }
+  fclose(stdin);
 
   // Print out symbol data
   size_t symbols = 0;
