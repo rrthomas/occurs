@@ -108,11 +108,11 @@ main(int argc, char *argv[])
   for (freq_symbol_t fw = hash_get_first(hash); fw != NULL; fw = hash_get_next(hash, fw), symbols++) {
     printf("%s", fw->symbol);
     if (!args_info.nocount_given)
-      printf(" %zd", fw->count);
+      printf(" %zu", fw->count);
     putchar('\n');
   }
   if (!args_info.nocount_given)
-    fprintf(stderr, "Total symbols: %zd\n", symbols);
+    fprintf(stderr, "Total symbols: %zu\n", symbols);
 
   return EXIT_SUCCESS;
 }
