@@ -20,6 +20,9 @@
 /stamp-h1
 /link-warning.h
 /occurs
+/occurs-vala.c
+/occurs-vala
+/occurs_vala_vala.stamp
 /TAGS
 /cmdline.c
 /cmdline.h
