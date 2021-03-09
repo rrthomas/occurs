@@ -1,7 +1,7 @@
 # gengetopt for occurs
 purpose "Count the number of occurrences of each symbol in a file"
 usage " [OPTION]... [FILE]...
-  In the file list, `-' means read from standard input"
+In the file list, `-' means read from standard input"
 
 option "nocount"    n "don't show the frequencies or total"     flag off
 option "symbol"     s "symbols are given by REGEXP"             string typestr="regexp" optional default="[[:alpha:]]+"
