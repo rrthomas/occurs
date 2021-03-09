@@ -2,6 +2,7 @@
 purpose "Count the number of occurrences of each symbol in a file"
 usage " [OPTION]... [FILE]...
 In the file list, `-' means read from standard input"
+versiontext "Copyright (c) 1992-2020 Reuben Thomas <rrt@sc3d.org>"
 
 option "nocount"    n "don't show the frequencies or total"     flag off
 option "symbol"     s "symbols are given by REGEXP"             string typestr="regexp" optional default="[[:alpha:]]+"
