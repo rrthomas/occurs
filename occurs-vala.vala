@@ -23,7 +23,7 @@ void help() {
 		PACKAGE_NAME + " " + VERSION + " by Reuben Thomas (" + PACKAGE_BUGREPORT + ")\n" +
 		"Counts the number of occurrences of each symbol in a file\n" +
 		"\n" +
-		"The default symbol type is words (-s \"([[:alpha:]]+)\"); other useful settings\n" +
+		"The default symbol type is words (-s \"[[:alpha:]]+\"); other useful settings\n" +
 		"include:\n" +
 		"\n" +
 		"   non-white-space characters: -s \"[^[:space:]]+\"\n" +
