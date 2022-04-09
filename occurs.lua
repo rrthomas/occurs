@@ -1,13 +1,13 @@
 #!/usr/bin/env lua
 spec = [=[
-occurs 0.90
-Copyright (c) 2018 Reuben Thomas <rrt@sc3d.org>
+occurs 0.91
+Copyright (c) 2022 Reuben Thomas <rrt@sc3d.org>
 
 Usage: occurs [OPTION...] [FILE...]
 
 Count the occurrences of each symbol in input.
 
-The default symbol type is words (-s "([[:alpha:]]+)"); other useful settings
+The default symbol type is words (-s "[[:alpha:]]+"); other useful settings
 include:
 
     non-white-space characters: -s "[^[:space:]]+"
@@ -30,7 +30,7 @@ os.setlocale ("")
 local OptionParser = require "std.optparse"
 local parser = OptionParser (spec)
 _G.arg, opts = parser:parse (_G.arg)
-local symbolPat = opts.symbol or "([[:alpha:]]+)"
+local symbolPat = opts.symbol or "[[:alpha:]]+"
 
 -- Compile symbol-matching regexp
 local ok, pattern = pcall (rex_posix.new, symbolPat)
