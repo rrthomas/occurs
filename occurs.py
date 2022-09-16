@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import os
 import sys
 import argparse
 import locale
@@ -21,10 +22,10 @@ include:
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
 parser.add_argument('-n', '--nocount', action='store_true',
                     help='don\'t show the frequencies or total')
-parser.add_argument('-s', '--symbol', metavar='REGEXP', default='[^\W\d_]+',
+parser.add_argument('-s', '--symbol', metavar='REGEXP', type=os.fsencode, default='[^\W\d_]+',
                     help='symbols are given by REGEXP')
 parser.add_argument('-V', '--version', action='version',
-                    version='%(prog)s 0.91 (7 Sep 2012) by Reuben Thomas <rrt@sc3d.org>')
+                    version='%(prog)s 0.92 (16 Sep 2022) by Reuben Thomas <rrt@sc3d.org>')
 parser.add_argument('file', metavar='FILE', nargs='*')
 
 args = parser.parse_args()
@@ -40,11 +41,12 @@ except re.error as err:
 
 # Process input
 freq = Counter()
-for line in fileinput.input(files=args.file or ['-']):
+for line in fileinput.input(mode='rb', files=args.file or ['-']):
     freq.update(pattern.findall(line))
 
 # Write output
 for s in freq:
-    print(s + ('' if args.nocount else ' {}'.format(freq[s])))
+    sys.stdout.buffer.write(s + (b'' if args.nocount else b' ' + bytes(str(freq[s]), 'utf-8')) + b'\n')
 if not args.nocount:
-    print("Total symbols:", len(freq), file=sys.stderr)
+    sys.stdout.flush()
+    print(f"Total symbols: {len(freq)}", file=sys.stderr)
