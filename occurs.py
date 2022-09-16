@@ -12,11 +12,11 @@ from collections import Counter
 parser = argparse.ArgumentParser(prog='occurs',
                                  description='Count the occurrences of each symbol in a file.',
                                  epilog='''
-The default symbol type is words (-s "([^\W\d_]+)"); other useful settings
+The default symbol type is words (-s "[^\W\d_]+"); other useful settings
 include:
 
-  non-white-space characters: -s "(\S+)"
-  alphanumerics and underscores: -s "(\w+)"
+  non-white-space characters: -s "\S+"
+  alphanumerics and underscores: -s "\w+"
   XML tags: -s "<([a-zA-Z_:][a-zA-Z_:.0-9-]*)[\s>]"
 ''',
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
