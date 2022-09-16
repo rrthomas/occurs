@@ -1,6 +1,6 @@
 #!/usr/bin/env lua
 spec = [=[
-occurs 0.92
+occurs 0.93
 Copyright (c) 2022 Reuben Thomas <rrt@sc3d.org>
 
 Usage: occurs [OPTION...] [FILE...]
@@ -49,8 +49,8 @@ std.io.process_files (function (file, number)
 
 -- Write output
 local symbols = 0
-for s in pairs (freq) do
-  std.io.writelines (s .. (opts.nocount and "" or " " .. freq[s]))
+for s, f in pairs (freq) do
+  std.io.writelines (s .. (opts.nocount and "" or " " .. f))
   symbols = symbols + 1
 end
 if not opts.nocount then
