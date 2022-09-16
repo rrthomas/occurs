@@ -4,7 +4,7 @@ import os
 import sys
 import argparse
 import locale
-import re
+import regex
 import fileinput
 from collections import Counter
 
@@ -12,7 +12,7 @@ from collections import Counter
 parser = argparse.ArgumentParser(prog='occurs',
                                  description='Count the occurrences of each symbol in a file.',
                                  epilog='''
-The default symbol type is words (-s "[\w\d_]+"); other useful settings
+The default symbol type is words (-s "\p{L}+"); other useful settings
 include:
 
   non-white-space characters: -s "\S+"
@@ -22,7 +22,7 @@ include:
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
 parser.add_argument('-n', '--nocount', action='store_true',
                     help='don\'t show the frequencies or total')
-parser.add_argument('-s', '--symbol', metavar='REGEXP', type=os.fsencode, default='[\w\d_]+',
+parser.add_argument('-s', '--symbol', metavar='REGEXP', default=r'\p{L}+',
                     help='symbols are given by REGEXP')
 parser.add_argument('-V', '--version', action='version',
                     version='%(prog)s 0.92 (16 Sep 2022) by Reuben Thomas <rrt@sc3d.org>')
@@ -35,18 +35,17 @@ locale.setlocale(locale.LC_ALL, '')
 
 # Compile symbol-matching regexp
 try:
-    pattern = re.compile(args.symbol, re.LOCALE)
-except re.error as err:
+    pattern = regex.compile(args.symbol)
+except regex.error as err:
     parser.error(err.args[0])
 
 # Process input
 freq = Counter()
-for line in fileinput.input(mode='rb', files=args.file or ['-']):
+for line in fileinput.input(files=args.file or ['-']):
     freq.update(pattern.findall(line))
 
 # Write output
 for s in freq:
-    sys.stdout.buffer.write(s + (b'' if args.nocount else b' ' + bytes(str(freq[s]), 'utf-8')) + b'\n')
+    print(s + ('' if args.nocount else f' {freq[s]}'))
 if not args.nocount:
-    sys.stdout.flush()
     print(f"Total symbols: {len(freq)}", file=sys.stderr)
