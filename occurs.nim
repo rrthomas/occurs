@@ -21,7 +21,7 @@ proc die(s: string) =
 var p = newParser(progName):
   help("Count the occurrences of each symbol in input.")
   # FIXME: support Unicode
-  option("-s", "--symbol", default = "[^\\W\\d_]+",
+  option("-s", "--symbol", default = "[\\w\\d_]+",
          help = "symbols are given by the regexp SYMBOL")
   flag("-n", "--nocount",
          help = "don't show the frequencies or total")
@@ -36,7 +36,7 @@ try:
   if opts.help:
     echo """
 
-The default symbol type is words (-s "[^\W\d_]+"); other useful settings
+The default symbol type is words (-s "[\w\d_]+"); other useful settings
 include:
 
   non-white-space characters: -s "\S+"
