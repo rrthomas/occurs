@@ -1,6 +1,6 @@
 #!/usr/bin/env lua
 spec = [=[
-occurs 0.91
+occurs 0.92
 Copyright (c) 2022 Reuben Thomas <rrt@sc3d.org>
 
 Usage: occurs [OPTION...] [FILE...]
@@ -10,9 +10,9 @@ Count the occurrences of each symbol in input.
 The default symbol type is words (-s "[[:alpha:]]+"); other useful settings
 include:
 
-    non-white-space characters: -s "[^[:space:]]+"
-    alphanumerics and underscores: -s "[[:alnum:]_]+"
-    XML tags: -s "<([a-zA-Z_:][a-zA-Z_:.0-9-]*)[[:space:]>]"
+  non-white-space characters: -s "[^[:space:]]+"
+  alphanumerics and underscores: -s "[[:alnum:]_]+"
+  XML tags: -s "<([a-zA-Z_:][a-zA-Z_:.0-9-]*)[[:space:]>]"
 
 Options:
 
