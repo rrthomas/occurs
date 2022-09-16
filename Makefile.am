@@ -26,7 +26,7 @@ occurs_vala_SOURCES = occurs-vala.vala
 occurs_vala_CFLAGS = --include config.h $(WARN_CFLAGS) $(GLIB_CFLAGS)
 occurs_vala_VALAFLAGS = $(AM_VALAFLAGS) --pkg config --pkg gee-0.8 --pkg posix --pkg gnu
 occurs_vala_LDADD = $(LDADD) $(GLIB_LIBS)
-VAPIS =	config.vapi gnu.vapi
+VAPIS =	config.vapi
 
 CLOC = cloc --force-lang="perl",ggo
 

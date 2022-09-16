@@ -7,6 +7,7 @@
 
 using Config;
 using Posix;
+using Gnu;
 
 string? get_symbol(Posix.Regex re, ref string line) {
 	Posix.RegexMatch match[1];
@@ -49,16 +50,16 @@ string symbol_arg;
    argument */
 int getopts(string[] args) {
 	/* Options table */
-	GetoptLong.Option longopts[] = {
-		{ "nocount", GetoptLong.none, null, 'n' },
-		{ "symbol",  GetoptLong.required, null, 's' },
-		{ "help",    GetoptLong.none, null, 'h' },
-		{ "version", GetoptLong.none, null, 'V' },
+	GetoptOption longopts[] = {
+		{ "nocount", GetoptArgument.NONE, null, 'n' },
+		{ "symbol",  GetoptArgument.REQUIRED, null, 's' },
+		{ "help",    GetoptArgument.NONE, null, 'h' },
+		{ "version", GetoptArgument.NONE, null, 'V' },
 		{ null, 0, null, 0 }
 	};
 
 	int this_optind = optind != 0 ? optind : 1;
-	int opt = GetoptLong.getopt_long(args, ":ns:hV", longopts, null);
+	int opt = getopt_long(args, ":ns:hV", longopts, null);
 	if (opt == 'n')
 		nocounts = false;
 	else if (opt == 's')
@@ -69,9 +70,9 @@ int getopts(string[] args) {
 		Posix.stdout.printf (PACKAGE_NAME + " " + VERSION + "\n");
 		exit(EXIT_SUCCESS);
 	} else if (opt == ':')
-		error(EXIT_FAILURE, errno, "option '%s' requires an argument", args[this_optind]);
+		Gnu.error(EXIT_FAILURE, errno, "option '%s' requires an argument", args[this_optind]);
 	else if (opt == '?')
-		error(EXIT_FAILURE, errno, "unrecognised option '%s'\nTry '%s --help' for more information.", args[this_optind], PACKAGE_NAME);
+		Gnu.error(EXIT_FAILURE, errno, "unrecognised option '%s'\nTry '%s --help' for more information.", args[this_optind], PACKAGE_NAME);
 
 	return optind;
 }
@@ -88,7 +89,7 @@ int main(string[] args) {
 	var re = Posix.Regex();
 	int err = re.comp(symbol_arg, Posix.RegexCompileFlags.EXTENDED);
 	if (err != 0)
-		error(EXIT_FAILURE, errno, "%s", re.error(err));
+		Gnu.error(EXIT_FAILURE, errno, "%s", re.error(err));
 
 	// Process input
 	var hash = new Gee.HashMap<string, size_t?>();
@@ -96,7 +97,7 @@ int main(string[] args) {
 		if (i < args.length && args[i] != "-") {
 			Posix.stdin.reopen(args[i], "r");
 			if (Posix.stdin == null)
-				error(EXIT_FAILURE, errno, "cannot open %s", quote(args[i]));
+				Gnu.error(EXIT_FAILURE, errno, "cannot open %s", quote(args[i]));
 		}
 		for (string? line = null; (line = GLib.stdin.read_line()) != null; ) {
 			string? symbol = null;
