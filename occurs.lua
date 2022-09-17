@@ -35,7 +35,7 @@ local symbolPat = opts.symbol or "[[:alpha:]]+"
 -- Compile symbol-matching regexp
 local ok, pattern = pcall (rex_posix.new, symbolPat)
 if not ok then
-  die (pattern)
+  std.io.die (pattern)
 end
 
 -- Process input
