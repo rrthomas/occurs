@@ -34,7 +34,7 @@ ChangeLog:
 	git2cl > ChangeLog
 
 pg100.txt:
-	wget http://www.gutenberg.org/ebooks/100.txt.utf8 -O $@
+	wget https://www.gutenberg.org/ebooks/100.txt.utf-8 -O $@
 
 check-local: pg100.txt occurs
 	time ./occurs$(EXEEXT) pg100.txt >/dev/null
