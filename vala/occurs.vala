@@ -97,7 +97,7 @@ int main(string[] args) {
 		if (i < args.length && args[i] != "-") {
 			Posix.stdin.reopen(args[i], "r");
 			if (Posix.stdin == null)
-				Gnu.error(EXIT_FAILURE, errno, "cannot open %s", quote(args[i]));
+				Gnu.error(EXIT_FAILURE, errno, "cannot open '%s'", args[i]);
 		}
 		for (string? line = null; (line = GLib.stdin.read_line()) != null; ) {
 			string? symbol = null;
