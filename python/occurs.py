@@ -40,7 +40,7 @@ except regex.error as err:
     parser.error(err.args[0])
 
 # Process input
-freq = Counter()
+freq: Counter = Counter()
 for line in fileinput.input(files=args.file or ['-']):
     freq.update(pattern.findall(line))
 
