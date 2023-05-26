@@ -25,4 +25,4 @@ check-local: pg100.txt occurs
 	time ./occurs$(EXEEXT) pg100.txt >/dev/null
 
 loc:
-	$(CLOC) --no3 occurs.vala Makefile.am configure.ac
+	$(CLOC) occurs.vala Makefile.am configure.ac
