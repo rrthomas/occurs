@@ -67,7 +67,7 @@ int getopts(string[] args) {
 	else if (opt == 'h')
 		help();
 	else if (opt == 'V') {
-		Posix.stdout.printf (PACKAGE_NAME + " " + VERSION + "\n" +
+		Posix.stdout.printf(PACKAGE_NAME + " " + VERSION + "\n" +
 			"Copyright © 2025 Reuben Thomas (" + PACKAGE_BUGREPORT + ")\n");
 		exit(EXIT_SUCCESS);
 	} else if (opt == ':')
