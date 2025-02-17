@@ -3,7 +3,7 @@
 # Copyright (c) 2009-2022 Reuben Thomas
 
 # Initialise autoconf and automake
-AC_INIT([occurs],[0.592],[rrt@sc3d.org])
+AC_INIT([occurs],[0.593],[rrt@sc3d.org])
 AM_INIT_AUTOMAKE([-Wall -Werror std-options foreign])
 
 # Checks for programs
