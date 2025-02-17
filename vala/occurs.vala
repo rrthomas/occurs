@@ -21,7 +21,7 @@ string? get_symbol(Posix.Regex re, ref string line) {
 /* Print help and exit */
 void help() {
 	Posix.stderr.printf(
-		PACKAGE_NAME + " " + VERSION + " by Reuben Thomas (" + PACKAGE_BUGREPORT + ")\n" +
+		"Usage: " + PACKAGE_NAME + " [OPTION]... [FILE]...\n" +
 		"Counts the number of occurrences of each symbol in a file\n" +
 		"\n" +
 		"The default symbol type is words (-s \"[[:alpha:]]+\"); other useful settings\n" +
@@ -67,7 +67,8 @@ int getopts(string[] args) {
 	else if (opt == 'h')
 		help();
 	else if (opt == 'V') {
-		Posix.stdout.printf (PACKAGE_NAME + " " + VERSION + "\n");
+		Posix.stdout.printf (PACKAGE_NAME + " " + VERSION + "\n" +
+			"Copyright © 2025 Reuben Thomas (" + PACKAGE_BUGREPORT + ")\n");
 		exit(EXIT_SUCCESS);
 	} else if (opt == ':')
 		Gnu.error(EXIT_FAILURE, errno, "option '%s' requires an argument", args[this_optind]);
