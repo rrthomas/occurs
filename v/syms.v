@@ -10,10 +10,10 @@ const manifest = vmod.from_file('v.mod') or { panic(err) }
 
 const reg_extended = 1
 
-[typedef]
+@[typedef]
 struct C.regex_t {}
 
-[typedef]
+@[typedef]
 struct C.regmatch_t {
 	rm_so isize
 	rm_eo isize
@@ -23,7 +23,7 @@ fn C.regcomp(&C.regex_t, &char, int) int
 fn C.regexec(&C.regex_t, &char, usize, []C.regmatch_t, int) int
 fn C.regerror(int, &C.regex_t, &char, usize) usize
 
-[noreturn]
+@[noreturn]
 fn error_exit(code int, msg string) {
 	eprintln(msg)
 	exit(code)
@@ -45,7 +45,7 @@ fn main() {
 	default_symbol := '[[:alpha:]]+'
 	symbol := fp.string('symbol', `s`, default_symbol, 'symbols are given by REGEXP')
 	fp.footer('
-The default symbol type is words (-s "$default_symbol"); other useful settings include:
+The default symbol type is words (-s "${default_symbol}"); other useful settings include:
 
   non-white-space characters: -s "[^[:space:]]+"
   alphanumerics and underscores: -s "[[:alnum:]_]+"
@@ -65,7 +65,7 @@ The default symbol type is words (-s "$default_symbol"); other useful settings i
 	additional_args := fp.finalize()?
 	for file in additional_args {
 		mut stdin := os.stdin()
-		stdin.reopen(file, 'r') or { error_exit(1, 'cannot open \'$file\'') }
+		stdin.reopen(file, 'r') or { error_exit(1, 'cannot open \'${file}\'') }
 		for !stdin.eof() {
 			l := os.get_line()
 			for start, end := isize(0), isize(0); true; start = end {
